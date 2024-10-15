@@ -2,18 +2,19 @@ const prisma = require('../prisma');
 
 const seed = async (numUsers = 3, numPlaylists = 5) => {
   for (let i = 0; i < numUsers; i++) {
-    const playlists = Array.from({ length: numPlaylists }, (_, j) => ({
-      name: `Person ${i}${j}`,
-      description: `${i}${j} is an interesting playlist!`,
-    }));
-
-    await prisma.user.create({
+    const user = await prisma.user.create({
       data: {
         username: `User ${i + 1}`,
-        playlists: {
-          create: playlists,
-        },
       },
+    });
+
+    const playlists = Array.from({ length: numPlaylists }, (_, j) => ({
+      name: `Playlist# ${j + 1}`,
+      description: `#${j + 1} is an interesting playlist!`,
+      ownerId: user.id,
+    }));
+    await prisma.playlist.createMany({
+      data: playlists,
     });
   }
 };
