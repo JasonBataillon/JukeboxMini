@@ -3,14 +3,41 @@
 ### Get all users
 GET {{host}}/users
 
+### Get all users : error 404
+GET {{host}}/user
+
 ### Get single user with playlists included
 GET {{host}}/users/2
+
+### Get single user with playlists included : error 404
+GET {{host}}/user/2
+
+### Get single user with playlists included : error 404
+GET {{host}}/users/17
 
 ### Make new playlist for the user
 POST {{host}}/users/2/playlists
 Content-Type: application/json
 
-    {
-    "name": "Hungry Hungry Henry",
-    "description": "Here's a great description."
-    }
+{
+"name": "Hungry Hungry Henry",
+"description": "Here's a great description."
+}
+
+### Make new playlist for the user : error 404
+POST {{host}}/users/2/playlist
+Content-Type: application/json
+
+{
+"name": "Hungry Hungry Henry",
+"description": "Here's a great description."
+}
+
+### Make new playlist for the user : error 400
+POST {{host}}/users/2/playlists
+Content-Type: application/json
+
+{
+"nae": "Hungry Hungry Henry",
+"desription": "Here's a great description."
+}
